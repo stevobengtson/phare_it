@@ -24,6 +24,42 @@ Users can upload and delete photos in their library as well as view other users 
     - Reset password?
     - ~~SSO (More complicated to set this up)~~
 - Library
+    - Create
+    - View
+    - Update
+- Photo
     - Upload Photo
     - Delete Photo
     - Share Photo
+
+Authentication
+ - Login the user (get JWT)
+ - Log out user (forget JWT)
+ - Refresh Token?
+
+### API Endpoints
+
+Users
+- POST /users
+- GET /users _Admin only_
+- GET /users/{id} _Admin or Owner only_
+- PATCH /users/{id} _Admin or Owner only_
+- DELETE /users/{id}  _Admin only_
+
+Authentication
+- POST /token
+- PATCH /token/{id}
+- DELETE /token
+
+Library
+- POST /libraries
+- GET /users/{id}/libraries _Admin or Owner only_
+- GET /libraries/{id}
+- PATCH /libraries/{id} _Admin or Owner only_
+- DELETE /libraries/{id} _Admin or Owner only_
+
+Photo
+- POST /photos
+- GET /users/{id}/libraries/{id}/photos _Admin or Owner only_
+- GET /photos/{id}
+- DELETE /photos/{id} _Admin or Owner only_
