@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  api:
+    restart: unless-stopped
+    build:
+      context: ./api
+      target: dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api:/app
+  
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - database:/data/db
+
+volumes:
+  database:

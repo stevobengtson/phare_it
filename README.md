@@ -63,3 +63,17 @@ Photo
 - GET /users/{id}/libraries/{id}/photos _Admin or Owner only_
 - GET /photos/{id}
 - DELETE /photos/{id} _Admin or Owner only_
+
+### Database Design
+
+User
+- email: [required: true, type: string]
+- password: [required: true, type: string] _Encoded_
+
+Library
+- user: [required: true, type: User]
+- name: [required: true, type: string]
+
+Photo
+- library: [required: true, type: Library]
+- image: [required: true, type: ???]
