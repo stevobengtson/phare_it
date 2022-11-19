@@ -11,6 +11,7 @@ services:
     volumes:
       - ./api:/app
     environment:
+      - NODE_ENV=dev
       - PORT=3000
       - MONGODB_URL=mongodb://mongo:27017/phareit
   

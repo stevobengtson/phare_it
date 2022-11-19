@@ -1,7 +1,14 @@
 const config = require('./config/config');
 const mongoose = require('mongoose');
+const app = require('./app');
 
-console.log(config.mongoose.url);
+let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
-    console.log('Connected to Database');
+    server = app.listen(config.port);
+});
+
+process.on('SIGTERM', () => {
+    if (server) {
+        server.close();
+    }
 });
