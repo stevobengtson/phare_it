@@ -10,6 +10,9 @@ services:
       - 3000:3000
     volumes:
       - ./api:/app
+    environment:
+      - PORT=3000
+      - MONGODB_URL=mongodb://mongo:27017/phareit
   
   mongo:
     image: mongo

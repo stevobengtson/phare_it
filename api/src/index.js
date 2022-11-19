@@ -1,9 +1,7 @@
-const express = require('express');
+const config = require('./config/config');
 const mongoose = require('mongoose');
 
-const app = express();
-app.use(express.json());
-
-app.listen(3000, () => {
-    console.log(`Server Started at ${3000}`)
-})
+console.log(config.mongoose.url);
+mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
+    console.log('Connected to Database');
+});
