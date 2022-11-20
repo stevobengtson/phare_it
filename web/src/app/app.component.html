@@ -1,0 +1,28 @@
+<div id="app">
+  <header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a routerLink="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">Phare It!</a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a routerLink="/home" class="nav-link px-2 text-secondary">Home</a></li>
+          <li *ngIf="isLoggedIn"><a routerLink="/library" class="nav-link px-2 text-secondary">Library</a></li>
+        </ul>
+
+        <div class="text-end" *ngIf="!isLoggedIn">
+          <a routerLink="/register" role="button" class="btn btn-warning">Sign Up</a>&nbsp;
+          <a routerLink="/login" role="button" class="btn btn-outline-light me-2">Login</a>
+        </div>
+
+        <div class="text-end" *ngIf="isLoggedIn">
+          <a role="button" class="btn btn-danger" (click)="logout()">LogOut</a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

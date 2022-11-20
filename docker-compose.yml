@@ -13,6 +13,14 @@ services:
       - ./api:/app
       - nodedata:/app/node_modules
 
+  web:
+    build: ./web
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./web:/app
+      - webnodedata:/app/node_modules
+
   mongodb:
     image: mongo:4.2.1-bionic
     ports:
@@ -23,3 +31,4 @@ services:
 volumes:
   dbdata:
   nodedata:
+  webnodedata:
