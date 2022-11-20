@@ -1,13 +1,7 @@
-FROM node:18.12.1 AS base
+FROM node:lts-alpine
 
 WORKDIR /app
-
-FROM base as prod
-COPY ["package.json", "package-lock.json*", "./"]
-RUN npm install --production
-COPY . /app/
-CMD ["npm", "start"]
-
-FROM base AS dev
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]

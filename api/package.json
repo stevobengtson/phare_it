@@ -4,12 +4,13 @@
   "description": "Phare It!",
   "main": "src/index.js",
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=18.12.1"
   },
   "scripts": {
     "start": "node src/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=dev nodemon --watch src src/index.js",
+    "test": "jest -i --colors --verbose --detectOpenHandles",
+    "test:watch": "jest -i --watchAll"
   },
   "repository": {
     "type": "git",
@@ -21,27 +22,37 @@
     "Social"
   ],
   "author": "Steven Bengtson",
-  "license": "ISC",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/stevobengtson/phare_it/issues"
   },
   "homepage": "https://github.com/stevobengtson/phare_it#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.20.1",
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-mongo-sanitize": "^2.2.0",
-    "express-rate-limit": "^6.7.0",
+    "cross-env": "^7.0.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.0.0",
+    "express-rate-limit": "^5.0.0",
+    "http-status": "^1.4.0",
+    "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.7.2",
-    "passport": "^0.6.0",
+    "moment": "^2.24.0",
+    "mongoose": "^5.7.7",
+    "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "validator": "^13.7.0"
+    "validator": "^13.0.0",
+    "winston": "^3.2.1",
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "faker": "^5.1.0",
+    "jest": "^26.0.1",
+    "lint-staged": "^11.0.0",
+    "node-mocks-http": "^1.8.0",
+    "nodemon": "^2.0.0",
+    "supertest": "^6.0.1"
   }
 }

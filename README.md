@@ -48,7 +48,7 @@ Users
 
 Authentication
 - POST /token
-- PATCH /token/{id}
+- PATCH /token
 - DELETE /token
 
 Library
