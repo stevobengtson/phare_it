@@ -58,4 +58,10 @@ export class AuthService {
       password
     }, httpOptions);
   }
+
+  refreshToken(refreshToken: string): Observable<any> {
+    return this.http.patch(environment.apiUrl = '/token', {
+      refreshToken
+    });
+  }
 }

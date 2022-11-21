@@ -1,0 +1,15 @@
+<form class="row row-cols-lg-auto g-3 align-items-center" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+    <div class="col-12">
+        <label class="visually-hidden" for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="form.name" required #name="ngModel" placeholder="Library Name" [disabled]="isLoading">
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading">Create</button>
+    </div>
+</form>
+
+<hr>
+<ul>
+    <li *ngFor="let library of libraries"><a [routerLink]="['/library', library.id]">{{ library.name }}</a></li>
+</ul>

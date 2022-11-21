@@ -4,11 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { LibraryComponent } from './library/library.component';
+import { LibraryManagerComponent } from './library-manager/library-manager.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'library', component: LibraryManagerComponent },
+  { path: 'library/:libraryId', component: LibraryComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
