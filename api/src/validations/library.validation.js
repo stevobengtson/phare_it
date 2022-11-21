@@ -18,7 +18,14 @@ const getLibraries = {
     }),
 };
 
+const getLibrary = {
+    params: Joi.object().keys({
+        libraryId: Joi.string().custom(objectId),
+    }),
+};
+
 module.exports = {
     createLibrary,
     getLibraries,
+    getLibrary,
 };

@@ -10,6 +10,7 @@
 </form>
 
 <hr>
-<ul>
-    <li *ngFor="let library of libraries"><a [routerLink]="['/library', library.id]">{{ library.name }}</a></li>
-</ul>
+
+<div class="list-group">
+    <a *ngFor="let library of libraries" [routerLink]="['/library', library.id]" class="list-group-item list-group-item-action">{{ library.name }}</a>
+</div>

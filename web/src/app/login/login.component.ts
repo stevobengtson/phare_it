@@ -28,11 +28,11 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.form;
 
     this.authService.login(email, password).subscribe({
-      next: data => {
+      next: () => {
         this.redirectUser();
       },
-      error: err => {
-        console.log(err);
+      error: (err: any) => {
+        console.error(err);
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       }

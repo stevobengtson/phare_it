@@ -34,19 +34,21 @@ export class AuthService {
     }, httpOptions).pipe(
       map((data: UserLogin) => {
         this.tokenService.saveToken(data.tokens.access.token);
+        this.tokenService.saveRefreshToken(data.tokens.refresh.token);
         this.tokenService.saveUser(data.user);
         this.loggedIn.next(true);
         return data;
       }),
       catchError( (error: any, caught: Observable<Object>) => {
-        this.tokenService.signOut();
-        this.loggedIn.next(false);
+        console.error(error);
+        this.logout();
         return caught;
       })
     );
   }
 
   logout(): void {
+    // @todo: call DELETE /token
     this.tokenService.signOut();
     this.loggedIn.next(false);
   }

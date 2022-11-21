@@ -13,6 +13,10 @@ const librarySchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
+    photos: [{
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "fs.files",
+    }],
   },
   {
     timestamps: true,

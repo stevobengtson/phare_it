@@ -17,6 +17,7 @@ module.exports = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
+    imageBucket: process.env.IMAGE_BUCKET || 'photos',
   },
   jwt: {
     secret: process.env.JWT_SECRET,

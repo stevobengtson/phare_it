@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
 import { TokenStorageService } from '../services/token-storage.service';
-import { BehaviorSubject, catchError, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 const TOKEN_HEADER_KEY = 'Authorization';
@@ -11,7 +11,7 @@ const TOKEN_HEADER_KEY = 'Authorization';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private retries = 0;
 
   constructor(private tokenService: TokenStorageService, private authService: AuthService) { }
 
@@ -22,20 +22,27 @@ export class AuthInterceptor implements HttpInterceptor {
       authReq = this.addTokenHeader(req, token);
     }
 
-    return next.handle(authReq).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && !authReq.url.includes('token') && error.status === 401) {
-        return this.handle401Error(authReq, next);
-      }
+    console.log(authReq.url);
+    return next.handle(authReq);
 
-      return throwError(error);
-    }));
+    // return next.handle(authReq).pipe(catchError(error => {
+    //   if (this.retries < 5 && error instanceof HttpErrorResponse && !authReq.url.includes('token') && error.status === 401) {
+    //     return this.handle401Error(authReq, next);
+    //   }
+
+    //   return throwError(() => new Error(error));
+    // }));
   }
 
   
   private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
+      this.retries++;
+      if (this.retries > 5) {
+        this.authService.logout();
+        return throwError(() => new Error('Max retries found'));
+      }
 
       const token = this.tokenService.getRefreshToken();
 
@@ -44,21 +51,20 @@ export class AuthInterceptor implements HttpInterceptor {
           switchMap((token: any) => {
             this.isRefreshing = false;
 
-            this.tokenService.saveToken(token.accessToken);
-            this.refreshTokenSubject.next(token.accessToken);
+            this.tokenService.saveToken(token.access.token);
+            this.tokenService.saveRefreshToken(token.refresh.token);
             
-            return next.handle(this.addTokenHeader(request, token.accessToken));
+            return next.handle(this.addTokenHeader(request, token.access.token));
           }),
           catchError((err) => {
             this.isRefreshing = false;
-            
-            this.tokenService.signOut();
-            return throwError(err);
+            this.authService.logout();
+            return throwError(() => new Error(err));
           })
         );
     }
 
-    return next.handle(request);
+    return throwError(() => new Error('Unauthorized'));
   }
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {

@@ -7,7 +7,8 @@ import { User } from './user.service';
 export interface Library {
   name: string,
   user: string|User,
-  id: string
+  id: string,
+  photos: string[]|null,
 }
 
 export interface LibraryPageResponse {
@@ -33,5 +34,9 @@ export class LibraryService {
 
   getUserLibraries(userId: string): Observable<any> {
     return this.http.get<LibraryPageResponse>(environment.apiUrl + '/users/' + userId + '/libraries');
+  }
+
+  getLibrary(libraryId: string): Observable<any> {
+    return this.http.get<Library>(environment.apiUrl + '/libraries/' + libraryId);
   }
 }

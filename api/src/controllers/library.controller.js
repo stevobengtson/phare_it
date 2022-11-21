@@ -1,7 +1,7 @@
 const httpStatus = require("http-status");
 const pick = require('../utils/pick');
 const catchAsync = require('../utils/catchAsync');
-const { libraryService, userService } = require("../services");
+const { libraryService } = require("../services");
 const RestError = require("../utils/RestError");
 
 const createLibrary = catchAsync(async (req, res) => {
@@ -20,7 +20,16 @@ const getLibraries = catchAsync(async (req, res) => {
     res.send(result);
 });
 
+const getLibrary = catchAsync(async (req, res) => {
+    const library = await libraryService.getLibraryById(req.params.libraryId);
+    if (!library || library.userId !== req.userId) {
+        throw new RestError(httpStatus.NOT_FOUND, 'Library not found');
+    }
+    res.send(library);
+});
+
 module.exports = {
     createLibrary,
     getLibraries,
+    getLibrary,
 };
