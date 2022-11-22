@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { LibraryComponent } from './library/library.component';
 import { LibraryManagerComponent } from './library-manager/library-manager.component';
+import { PhotoComponent } from './photo/photo.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LibraryManagerComponent } from './library-manager/library-manager.compo
     HomeComponent,
     LibraryComponent,
     LibraryManagerComponent,
+    PhotoComponent,
   ],
   imports: [
     BrowserModule,

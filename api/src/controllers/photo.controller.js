@@ -11,14 +11,14 @@ const uploadPhoto = catchAsync(async (req, res) => {
         throw new RestError(httpStatus.NO_CONTENT, 'No file to upload');
     }
 
-    await libraryService.addPhotoToLibrary(req.params.libraryId, req.file.id);
+    await libraryService.addPhotoToLibrary(req.params.libraryId, req.file.filename);
 
     res.send(req.file);
 });
 
 const getPhoto = catchAsync(async (req, res) => {
     const bucket = new mongodb.GridFSBucket(mongoose.connection.db, { bucketName: config.mongoose.imageBucket });
-    const downloadStream = bucket.openDownloadStream(mongodb.ObjectId(req.params.photoId));
+    const downloadStream = bucket.openDownloadStreamByName(req.params.photoId);
     downloadStream.on("data", function (data) {
         return res.status(200).write(data);
     });

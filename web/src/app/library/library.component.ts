@@ -1,6 +1,7 @@
 import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { FileUploadService } from '../services/file-upload.service';
 import { Library, LibraryService } from '../services/library.service';
 
@@ -19,6 +20,9 @@ export class LibraryComponent implements OnInit {
   ];
   isLoading: boolean = false;
   file: File|null = null;
+  photoRootUrl: string = environment.apiUrl + '/photos';
+  
+  @ViewChild("fileInput", {static: false}) fileInput: ElementRef | undefined;
 
   constructor(private route: ActivatedRoute, private libraryService: LibraryService, private fileUploadService: FileUploadService) { }
 
@@ -51,7 +55,13 @@ export class LibraryComponent implements OnInit {
 
     this.isLoading = true;
     this.fileUploadService.upload(this.libraryId, this.file).subscribe({
-      next: () => alert('Uploaded'),
+      next: (file: any) => {
+        this.library?.photos?.push(file.filename);
+        this.file = null;
+        if (this.fileInput !== undefined) {
+          this.fileInput.nativeElement.value = '';
+        }
+      },
       error: (error: any) => {
         this.isLoading = false;
         console.log(error);

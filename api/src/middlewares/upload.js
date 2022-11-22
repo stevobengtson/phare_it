@@ -15,7 +15,7 @@ const storage = new GridFsStorage({
     }
 
     return {
-      bucketName: config.imageBucket,
+      bucketName: config.mongoose.imageBucket,
       filename: `${Date.now()}-phare-it-${file.originalname}`,
     };
   },

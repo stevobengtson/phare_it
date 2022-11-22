@@ -40,6 +40,7 @@ app.use('/', routes);
 
 // Handle not found requests
 app.use((req, res, next) => {
+  console.error(req.url);
   next(new RestError(httpStatus.NOT_FOUND, 'Not found'));
 });
 

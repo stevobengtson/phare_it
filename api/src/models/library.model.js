@@ -14,8 +14,7 @@ const librarySchema = mongoose.Schema(
       required: true,
     },
     photos: [{
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "fs.files",
+      type: String,
     }],
   },
   {

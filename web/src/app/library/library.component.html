@@ -1,6 +1,6 @@
 <div class="h4 pb-2 mb-4 text-primary border-bottom border-primary">
     {{library?.name}}
-    <input class="form-control" type="file" (change)="onChange($event)" [disabled]="isLoading">
+    <input class="form-control" type="file" (change)="onChange($event)" [disabled]="isLoading" #fileInput>
     <button (click)="onUpload()"  class="btn btn-success" [disabled]="isLoading">Upload</button>
     <div class="spinner-border text-primary" role="status" [hidden]="!isLoading">
         <span class="visually-hidden">Loading...</span>
@@ -9,14 +9,9 @@
 
 <div class="container text-center">
     <div class="row row-cols-4">
-        <div *ngFor="let photo of library?.photos" class="col">
+        <div *ngFor="let photoFileName of library?.photos" class="col">
             <div class="card" style="width: 18rem;">
-                <img src="http://localhost:3000/photos/{{photo}}" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">{{photo}}</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+                <a [routerLink]="['/photo', photoFileName]"><img src="{{photoRootUrl}}/{{photoFileName}}" class="card-img-top"></a>
             </div>
     </div>
 </div>

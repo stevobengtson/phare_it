@@ -48,7 +48,6 @@ export class AuthService {
   }
 
   logout(): void {
-    // @todo: call DELETE /token
     this.tokenService.signOut();
     this.loggedIn.next(false);
   }

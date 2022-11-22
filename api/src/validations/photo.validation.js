@@ -9,7 +9,7 @@ const uploadPhoto = {
 
 const getPhoto = {
     params: Joi.object().keys({
-        photoId: Joi.string().custom(objectId),
+        photoId: Joi.string(),
     }),
 };
 

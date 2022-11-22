@@ -34,16 +34,16 @@ const getLibraryById = async (id) => {
 /**
  * Add a photo to a library
  * @param {ObjectId} libraryId
- * @param {ObjectId} photoId
+ * @param {string} fileName
  * @returns {Promise<Library>}
  */
-const addPhotoToLibrary = async (libraryId, photoId) => {
+const addPhotoToLibrary = async (libraryId, fileName) => {
     const library = await Library.findById(libraryId);
     if (!library) {
         throw new RestError(httpStatus.NOT_FOUND, 'Library not found');
     }
 
-    library.photos.push(photoId);
+    library.photos.push(fileName);
 
     return await library.save();
 }

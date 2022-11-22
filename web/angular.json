@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "PhareIt": {
+    "phareIt": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {

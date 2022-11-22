@@ -12,6 +12,6 @@ export class FileUploadService {
   upload(libraryId: string, file: File):Observable<any> {
       const formData = new FormData(); 
       formData.append("file", file, file.name);
-      return this.http.post(environment.apiUrl + '/libraries/' + libraryId + '/photo', formData)
+      return this.http.post(environment.apiUrl + '/libraries/' + libraryId + '/photos', formData)
   }
 }
