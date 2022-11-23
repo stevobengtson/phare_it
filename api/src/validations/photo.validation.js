@@ -9,11 +9,19 @@ const uploadPhoto = {
 
 const getPhoto = {
     params: Joi.object().keys({
-        photoId: Joi.string(),
+        photoName: Joi.string(),
+    }),
+};
+
+const deletePhoto = {
+    params: Joi.object().keys({
+        libraryId: Joi.string().custom(objectId),
+        photoName: Joi.string(),
     }),
 };
 
 module.exports = {
     uploadPhoto,
     getPhoto,
+    deletePhoto,
 };

@@ -48,9 +48,22 @@ const addPhotoToLibrary = async (libraryId, fileName) => {
     return await library.save();
 }
 
+const removePhotoFromLibrary = async (libraryId, fileName) => {
+    const library = await Library.findById(libraryId);
+    if (!library) {
+        throw new RestError(httpStatus.NOT_FOUND, 'Library not found');
+    }
+
+    const index = library.photos.indexOf(fileName);
+    library.photos.splice(index, 1);
+
+    return await library.save();
+}
+
 module.exports = {
     createLibrary,
     queryLibraries,
     getLibraryById,
     addPhotoToLibrary,
+    removePhotoFromLibrary,
 };

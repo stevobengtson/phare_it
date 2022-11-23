@@ -22,7 +22,6 @@ export class AuthInterceptor implements HttpInterceptor {
       authReq = this.addTokenHeader(req, token);
     }
 
-    console.log(authReq.url);
     return next.handle(authReq);
 
     // return next.handle(authReq).pipe(catchError(error => {

@@ -1,8 +1,7 @@
-import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { FileUploadService } from '../services/file-upload.service';
+import { PhotoService } from '../services/photo.service';
 import { Library, LibraryService } from '../services/library.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class LibraryComponent implements OnInit {
   
   @ViewChild("fileInput", {static: false}) fileInput: ElementRef | undefined;
 
-  constructor(private route: ActivatedRoute, private libraryService: LibraryService, private fileUploadService: FileUploadService) { }
+  constructor(private route: ActivatedRoute, private libraryService: LibraryService, private photoService: PhotoService) { }
 
   ngOnInit(): void {
     this.libraryId = this.route.snapshot.paramMap.get('libraryId');
@@ -48,13 +47,28 @@ export class LibraryComponent implements OnInit {
     this.file = event.target.files[0];
   }
 
+  deletePhoto(fileName: string): void {
+    if (this.libraryId !== null) {
+      this.photoService.delete(this.libraryId, fileName).subscribe({
+        next: () => {
+          if (this.library?.photos) {
+            console.log('Looking for', fileName, 'in', this.library.photos);
+            const index = this.library.photos.indexOf(fileName);
+            this.library.photos.splice(index, 1);
+          }
+        },
+        error: (err) => alert(err)
+      });
+    }
+  }
+
   onUpload(): void {
     if (this.file === null || this.libraryId === null) {
       return;
     }
 
     this.isLoading = true;
-    this.fileUploadService.upload(this.libraryId, this.file).subscribe({
+    this.photoService.upload(this.libraryId, this.file).subscribe({
       next: (file: any) => {
         this.library?.photos?.push(file.filename);
         this.file = null;

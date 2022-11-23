@@ -18,7 +18,7 @@ const uploadPhoto = catchAsync(async (req, res) => {
 
 const getPhoto = catchAsync(async (req, res) => {
     const bucket = new mongodb.GridFSBucket(mongoose.connection.db, { bucketName: config.mongoose.imageBucket });
-    const downloadStream = bucket.openDownloadStreamByName(req.params.photoId);
+    const downloadStream = bucket.openDownloadStreamByName(req.params.photoName);
     downloadStream.on("data", function (data) {
         return res.status(200).write(data);
     });
@@ -32,7 +32,20 @@ const getPhoto = catchAsync(async (req, res) => {
     });
 });
 
+const deletePhoto = catchAsync(async (req, res) => {
+    const bucket = new mongodb.GridFSBucket(mongoose.connection.db, { bucketName: config.mongoose.imageBucket });
+    const cursor = bucket.find({ filename: req.params.photoName });
+    cursor.forEach((file) => {
+        bucket.delete(new mongodb.ObjectId(file._id));
+    });
+
+    await libraryService.removePhotoFromLibrary(req.params.libraryId, req.params.photoName);
+
+    res.status(200).send();
+});
+
 module.exports = {
     uploadPhoto,
     getPhoto,
+    deletePhoto,
 };

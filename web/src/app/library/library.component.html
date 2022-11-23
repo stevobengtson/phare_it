@@ -12,6 +12,7 @@
         <div *ngFor="let photoFileName of library?.photos" class="col">
             <div class="card" style="width: 18rem;">
                 <a [routerLink]="['/photo', photoFileName]"><img src="{{photoRootUrl}}/{{photoFileName}}" class="card-img-top"></a>
+                <button class="btn btn-danger" (click)="deletePhoto(photoFileName)">Delete</button>
             </div>
     </div>
 </div>

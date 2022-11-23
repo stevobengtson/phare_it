@@ -5,6 +5,6 @@ const validate = require('../middlewares/validate');
 
 const router = express.Router();
 
-router.get('/:photoId', validate(photoValidation.getPhoto), photoController.getPhoto);
+router.get('/:photoName', validate(photoValidation.getPhoto), photoController.getPhoto);
 
 module.exports = router;
